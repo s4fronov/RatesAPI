@@ -15,15 +15,14 @@ namespace Rates.API
     {
         public static void Main(string[] args)
         {
-            string rates;
+            RatesContainer rc = RatesContainer.GetInstance();
             
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromMinutes(60);
 
             var timer = new Timer((e) =>
             {
-
-               rates = Ratesrequest.SendingRequest();
+               rc.Rates = Ratesrequest.SendingRequest();
             }, null, startTimeSpan, periodTimeSpan);
 
 

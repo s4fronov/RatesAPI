@@ -22,8 +22,8 @@ namespace Rates.API.Controllers
                 
         [HttpGet]
         public string GetCurrencyRates()
-        {            
-            return Ratesrequest.SendingRequest();
+        {
+            return RatesContainer.GetInstance().Rates;
         }
 
     }
