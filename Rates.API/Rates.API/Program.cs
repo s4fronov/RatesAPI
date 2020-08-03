@@ -22,22 +22,9 @@ namespace Rates.API
 
             var timer = new Timer((e) =>
             {
-               rc.Rates = Ratesrequest.SendingRequest();
+               rc.Rates = RatesRequest.GetRates();
             }, null, startTimeSpan, periodTimeSpan);
-
-
-            CreateHostBuilder(args).Build().Run();
+            Console.ReadKey();
         }
-
-      
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-
-        
     }
 }
