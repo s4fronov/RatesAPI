@@ -14,7 +14,7 @@ namespace Rates.API
         {
             string _responseText;
                        
-            WebRequest request = WebRequest.Create("https://api.exchangeratesapi.io/latest?base=RUB&symbols=USD,EUR,JPY");
+            WebRequest request = WebRequest.Create("http://data.fixer.io/api/latest?access_key=bf01a2ff20ebff3a52221f39e4500112&symbols=USD,RUB,JPY");
             WebResponse response = request.GetResponse();
             using (Stream responseStream = response.GetResponseStream())
             {

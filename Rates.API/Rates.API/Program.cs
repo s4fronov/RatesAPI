@@ -18,9 +18,9 @@ namespace Rates.API
             string rates;
             
             var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromMinutes(5);
+            var periodTimeSpan = TimeSpan.FromMinutes(60);
 
-            var timer = new System.Threading.Timer((e) =>
+            var timer = new Timer((e) =>
             {
 
                rates = Ratesrequest.SendingRequest();
@@ -28,8 +28,6 @@ namespace Rates.API
 
 
             CreateHostBuilder(args).Build().Run();
-
-
         }
 
       

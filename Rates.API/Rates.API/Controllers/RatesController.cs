@@ -21,7 +21,7 @@ namespace Rates.API.Controllers
         }
                 
         [HttpGet]
-        public  string SendCurrencyRates()
+        public string GetCurrencyRates()
         {            
             return Ratesrequest.SendingRequest();
         }
