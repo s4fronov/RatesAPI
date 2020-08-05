@@ -7,10 +7,9 @@ namespace Rates.API
 {
     public class Rates
     {
-        public DateTime time { get; set; }
+        public DateTime Time { get; set; }
         public double USD { get; set; }
         public double RUB { get; set; }
         public double JPY { get; set; }
-
     }
 }
