@@ -9,7 +9,7 @@ namespace Rates.API
         {
             string _responseText;
                        
-            WebRequest request = WebRequest.Create("http://data.fixer.io/api/latest?access_key=bf01a2ff20ebff3a52221f39e4500112&symbols=USD,RUB,JPY");
+            WebRequest request = WebRequest.Create(AddressProfile.api);
             WebResponse response = request.GetResponse();
             using (Stream responseStream = response.GetResponseStream())
             {
