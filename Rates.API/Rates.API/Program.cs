@@ -19,9 +19,12 @@ namespace Rates.API
             {
                 string currencyRates = RatesRequest.GetRates();
                 currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currencyRates);               
-                string currenciesData = "DateOfChanges: " + currencies.Time + "; USD = " + currencies.Rates.USD + "; RUB = " + currencies.Rates.RUB + "; JPY = " + currencies.Rates.JPY;                
+                string currenciesData = "DateOfChanges: " + currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + "; USD = " + currencies.Rates.USD + "; RUB = " + currencies.Rates.RUB + "; JPY = " + currencies.Rates.JPY;                
                 File.AppendAllText(Filepath, currenciesData + "\n");
+                Console.WriteLine(currencies.Time);
             }, null, startTimeSpan, periodTimeSpan);
+
+            
             Console.ReadKey();
         }
     }
