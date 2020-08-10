@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Rates.API
 {
-    interface Interface
+    public interface EventMessage
     {
+        public string Text { get; set; }
     }
 }

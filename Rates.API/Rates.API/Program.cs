@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using MassTransit;
 using Newtonsoft.Json;
 
@@ -16,14 +17,14 @@ namespace Rates.API
 
             Console.OutputEncoding = Encoding.UTF8;
 
-            string host = "host";
-            string vhost = "vhost";
-            string username = "username";
-            string password = "password";
+            string host = "http://localhost:15672/#/";
+            
+            string username = "guest";
+            string password = "guest";
 
             var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                IRabbitMqHost rmqHost = cfg.Host(host, vhost, h =>
+                cfg.Host("localhost", "/", h =>
                 {
                     h.Username(username);
                     h.Password(password);
@@ -44,7 +45,7 @@ namespace Rates.API
 
             Console.ReadKey();
 
-            bus.Stop();
+           
             ExchangeRateModel currencies = new ExchangeRateModel();
             string Filepath = @"D:\currency.txt";
             var startTimeSpan = TimeSpan.Zero;
@@ -54,12 +55,12 @@ namespace Rates.API
                 string currencyRates = RatesRequest.GetRates();
                 currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currencyRates);               
                 string currenciesData = "DateOfChanges: " + currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + "; USD = " + currencies.Rates.USD + "; RUB = " + currencies.Rates.RUB + "; JPY = " + currencies.Rates.JPY;                
-                File.AppendAllText(Filepath, currenciesData + "\n");
-                Console.WriteLine(currencies.Time);
+                File.AppendAllText(Filepath, currenciesData + "\n");               
             }, null, startTimeSpan, periodTimeSpan);
 
             
             Console.ReadKey();
+            bus.Stop();
         }
     }
 }

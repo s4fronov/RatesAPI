@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Rates.API
 {
-    interface CompetingConsumersMessage
+    public interface CompetingConsumersMessage
     {
+        public string Text { get; set; }
     }
 }
