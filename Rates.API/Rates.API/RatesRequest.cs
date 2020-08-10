@@ -4,7 +4,7 @@ using System.Net;
 namespace Rates.API
 {
     public class RatesRequest
-    {
+    {        
         public static string GetRates()
         {
             string _responseText;
