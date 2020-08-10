@@ -1,11 +1,9 @@
-﻿
-namespace Rates.API
+﻿namespace Rates.API
 {
     public class RatesContainer
     {
         public string Rates { get; set; }
-
-        //singleton
+  
         private static RatesContainer instance;
 
         private RatesContainer() { }

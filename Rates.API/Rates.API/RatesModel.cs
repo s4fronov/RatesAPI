@@ -1,5 +1,4 @@
-﻿
-namespace Rates.API
+﻿namespace Rates.API
 {
     public class RatesModel
     {       

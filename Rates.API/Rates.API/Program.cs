@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using Messaging;
 using Newtonsoft.Json;
 
 namespace Rates.API
@@ -15,9 +16,7 @@ namespace Rates.API
         static async Task Main(string[] args)
         {
 
-            Console.OutputEncoding = Encoding.UTF8;
-
-            string host = "http://localhost:15672/#/";
+            Console.OutputEncoding = Encoding.UTF8;           
             
             string username = "guest";
             string password = "guest";
@@ -36,15 +35,7 @@ namespace Rates.API
             Console.WriteLine("Нажмите Enter, чтобы опубликовать событийное сообщение.");
             Console.ReadKey();
 
-            await bus.Publish<EventMessage>(new { Text = "Событийное сообщение: приходит ко всем потребителям." });
-
-            Console.WriteLine("Нажмите Enter, чтобы опубликовать соревновательное сообщение.");
-            Console.ReadKey();
-
-            await bus.Publish<CompetingConsumersMessage>(new { Text = "Соревновательное сообщение: принимается только одним из подписчиков очереди." });
-
-            Console.ReadKey();
-
+            await bus.Publish<EventMessage>(new { Text = "Событийное сообщение: приходит ко всем потребителям." });  
            
             ExchangeRateModel currencies = new ExchangeRateModel();
             string Filepath = @"D:\currency.txt";
@@ -57,8 +48,6 @@ namespace Rates.API
                 string currenciesData = "DateOfChanges: " + currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + "; USD = " + currencies.Rates.USD + "; RUB = " + currencies.Rates.RUB + "; JPY = " + currencies.Rates.JPY;                
                 File.AppendAllText(Filepath, currenciesData + "\n");               
             }, null, startTimeSpan, periodTimeSpan);
-
-            
             Console.ReadKey();
             bus.Stop();
         }
