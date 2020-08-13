@@ -25,7 +25,7 @@ namespace Rates.API
             });
             bus.Start();
             ExchangeRateModel currencies = new ExchangeRateModel();
-            string Filepath = @"D:\currency.txt";
+            string Filepath = @"C:\currency.txt";
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromMinutes(60);           
             var timer = new Timer(async(e) =>
@@ -37,10 +37,11 @@ namespace Rates.API
                 await bus.Publish<Currencies>(new 
                 { 
                     Rates = new List<Currency> 
-                    { 
+                    {
+                        new Currency { Code = "EUR", Rate = 1 },
                         new Currency { Code = "USD", Rate = currencies.Rates.USD }, 
                         new Currency { Code = "RUB", Rate = currencies.Rates.RUB }, 
-                        new Currency { Code = "JPY", Rate = currencies.Rates.JPY } 
+                        new Currency { Code = "JPY", Rate = currencies.Rates.JPY }
                     } 
                 });                
             }, null, startTimeSpan, periodTimeSpan);
