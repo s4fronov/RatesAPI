@@ -1,15 +1,17 @@
 using System;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Rates.API
 {
     public class Program
-    {       
+    {        
         static async Task Main(string[] args)
-        {
+        {            
             Console.OutputEncoding = Encoding.UTF8;
             Playboy playboy = new Playboy();
             var bus = playboy.GetConnectionBus();

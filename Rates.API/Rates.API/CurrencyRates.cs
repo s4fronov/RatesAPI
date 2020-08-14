@@ -1,24 +1,33 @@
-﻿using System.IO;
-using System.Net;
+﻿using RestSharp;
 
 namespace Rates.API
 {
     public class CurrencyRates
-    {        
-        public static string GetRates()
-        {
-            string _responseText;
-                       
-            WebRequest request = WebRequest.Create(AddressProfile.api); // сделать RestSharp
-            WebResponse response = request.GetResponse();
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream);
-                _responseText = reader.ReadToEnd();         
-            }
-            return _responseText;
+    {
+        private static CurrencyRates instance;
 
+        private CurrencyRates() { }
+      
+        public static string GetRates()
+        {           
+            var restClient = new RestClient(AddressProfile.api);
+            var restRequest = new RestRequest(AddressProfile.url, Method.GET, DataFormat.Json);            
+            return restClient.Execute<string>(restRequest).Data;           
             // здесь херачим singleton
         }
     }
+    //class Singleton
+    //{
+    //    private static Singleton instance;
+
+    //    private Singleton()
+    //    { }
+
+    //    public static Singleton getInstance()
+    //    {
+    //        if (instance == null)
+    //            instance = new Singleton();
+    //        return instance;
+    //    }
+    //}    
 }
