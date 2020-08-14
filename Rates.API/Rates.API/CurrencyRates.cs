@@ -9,7 +9,7 @@ namespace Rates.API
         {
             string _responseText;
                        
-            WebRequest request = WebRequest.Create(AddressProfile.api);
+            WebRequest request = WebRequest.Create(AddressProfile.api); // сделать RestSharp
             WebResponse response = request.GetResponse();
             using (Stream responseStream = response.GetResponseStream())
             {
@@ -17,6 +17,8 @@ namespace Rates.API
                 _responseText = reader.ReadToEnd();         
             }
             return _responseText;
+
+            // здесь херачим singleton
         }
     }
 }

@@ -7,23 +7,23 @@ namespace Rates.API
 {
     public class Playboy
     {
-        ConvertationFromJson curr = new ConvertationFromJson();
         public IBusControl GetConnectionBus() 
         {
             var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                cfg.Host("localhost", "/", h =>
-                {
-                    h.Username("guest");
-                    h.Password("guest");
-                });
+                cfg.Host("localhost", "/", h => //
+                { //
+                    h.Username("guest"); // перенести в конфигурацию
+                    h.Password("guest"); //
+                }); //
             });
             return bus;
         }
 
         public async Task PublishRates(IBusControl bus) 
         {
-            var currencies = curr.GetModel();
+            CurrenciesGetter currenciesGetter = new CurrenciesGetter();
+            var currencies = currenciesGetter.GetModel();
             await bus.Publish<Currencies>(new
             {
                 Rates = new List<Currency>
