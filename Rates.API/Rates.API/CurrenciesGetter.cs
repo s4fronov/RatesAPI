@@ -14,10 +14,10 @@ namespace Rates.API
 
         public void AddRateToTheTextFile(ExchangeRateModel currencies)
         {
-           string _filepath = @"C:\currency.txt";
+           string _filepath = @"./currency.txt"; // тоже в конфигурацию
            string currenciesData = "DateOfChanges: " + //
                 currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + //
-                "; USD = " + currencies.Rates.USD + //          вынести этот метод куда-нибудь
+                "; USD = " + currencies.Rates.USD + //          вынести этот метод куда-нибудь  сделать класс CurrenciesLogger и метод LogCurrencies 
                 "; RUB = " + currencies.Rates.RUB + //
                 "; JPY = " + currencies.Rates.JPY;//
             File.AppendAllText(_filepath, currenciesData + "\n");//

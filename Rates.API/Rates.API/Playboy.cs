@@ -13,7 +13,7 @@ namespace Rates.API
             {
                 cfg.Host("localhost", "/", h => //
                 { //
-                    h.Username("guest"); // перенести в конфигурацию
+                    h.Username("guest"); // перенести в конфигурацию 
                     h.Password("guest"); //
                 }); //
             });
@@ -22,7 +22,7 @@ namespace Rates.API
 
         public async Task PublishRates(IBusControl bus) 
         {
-            CurrenciesGetter currenciesGetter = new CurrenciesGetter();
+            CurrenciesGetter currenciesGetter = new CurrenciesGetter();  //здесь только паблиш, эти строчки убираем, берем из синглтона, берем ситуацию, что апи перестал возвращать данные
             var currencies = currenciesGetter.GetModel();
             await bus.Publish<Currencies>(new
             {

@@ -20,7 +20,7 @@ namespace Rates.API
             var periodTimeSpan = TimeSpan.FromMinutes(60); //     
             var timer = new Timer(async(e) => //    добавить обработчики getModel, publishRates и logRates через событие elapsed
             { //
-                await playboy.PublishRates(bus); //
+                await playboy.PublishRates(bus); // поработать с событиями!!!!!
             }, null, startTimeSpan, periodTimeSpan); //
             Console.ReadKey();
             bus.Stop();

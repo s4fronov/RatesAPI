@@ -13,7 +13,7 @@ namespace Rates.API
             var restClient = new RestClient(AddressProfile.api);
             var restRequest = new RestRequest(AddressProfile.url, Method.GET, DataFormat.Json);            
             return restClient.Execute<string>(restRequest).Data;           
-            // здесь херачим singleton
+            // здесь херачим singleton, тут будет инстанс и сам метод
         }
     }
     //class Singleton
