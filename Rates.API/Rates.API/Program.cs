@@ -16,12 +16,12 @@ namespace Rates.API
             Playboy playboy = new Playboy();
             var bus = playboy.GetConnectionBus();
             bus.Start();
-            var startTimeSpan = TimeSpan.Zero; //
-            var periodTimeSpan = TimeSpan.FromMinutes(60); //     
-            var timer = new Timer(async(e) => //    добавить обработчики getModel, publishRates и logRates через событие elapsed
-            { //
+            var startTimeSpan = TimeSpan.Zero; 
+            var periodTimeSpan = TimeSpan.FromMinutes(60);     
+            var timer = new Timer(async(e) =>    //добавить обработчики getModel, publishRates и logRates через событие elapsed
+            { 
                 await playboy.PublishRates(bus); // поработать с событиями!!!!!
-            }, null, startTimeSpan, periodTimeSpan); //
+            }, null, startTimeSpan, periodTimeSpan); 
             Console.ReadKey();
             bus.Stop();
         }

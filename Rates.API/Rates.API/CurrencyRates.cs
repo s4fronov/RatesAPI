@@ -4,11 +4,18 @@ namespace Rates.API
 {
     public class CurrencyRates
     {
-        private static CurrencyRates instance;
+        private static CurrencyRates _instance;
 
         private CurrencyRates() { }
-      
-        public static string GetRates()
+
+        public static CurrencyRates getInstance()
+        {
+            if (_instance == null)
+                _instance = new CurrencyRates();
+            return _instance;
+        }
+
+        public string GetRates()
         {           
             var restClient = new RestClient(AddressProfile.api);
             var restRequest = new RestRequest(AddressProfile.url, Method.GET, DataFormat.Json);            
@@ -16,18 +23,5 @@ namespace Rates.API
             // здесь херачим singleton, тут будет инстанс и сам метод
         }
     }
-    //class Singleton
-    //{
-    //    private static Singleton instance;
-
-    //    private Singleton()
-    //    { }
-
-    //    public static Singleton getInstance()
-    //    {
-    //        if (instance == null)
-    //            instance = new Singleton();
-    //        return instance;
-    //    }
-    //}    
+    
 }

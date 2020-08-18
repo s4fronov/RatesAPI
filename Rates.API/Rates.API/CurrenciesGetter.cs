@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.IO;
 
 namespace Rates.API
 {
@@ -7,20 +6,9 @@ namespace Rates.API
     {        
         public ExchangeRateModel GetModel()
         {
-            string currencyRates = CurrencyRates.GetRates();
-            ExchangeRateModel currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currencyRates);            
+            CurrencyRates currencyRates = CurrencyRates.getInstance();            
+            ExchangeRateModel currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currencyRates.GetRates());            
             return currencies;
-        }
-
-        public void AddRateToTheTextFile(ExchangeRateModel currencies)
-        {
-           string _filepath = @"./currency.txt"; // тоже в конфигурацию
-           string currenciesData = "DateOfChanges: " + //
-                currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + //
-                "; USD = " + currencies.Rates.USD + //          вынести этот метод куда-нибудь  сделать класс CurrenciesLogger и метод LogCurrencies 
-                "; RUB = " + currencies.Rates.RUB + //
-                "; JPY = " + currencies.Rates.JPY;//
-            File.AppendAllText(_filepath, currenciesData + "\n");//
         }
     }
 }
