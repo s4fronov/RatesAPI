@@ -20,18 +20,18 @@ namespace Rates.API
             return bus;
         }
 
-        public async Task PublishRates(IBusControl bus) 
-        {
-            await bus.Publish<Currencies>(new
-            {
-                Rates = new List<Currency>
-                {
-                    new Currency { Code = "EUR", Rate = 1 },
-                    new Currency { Code = "USD", Rate = currencies.Rates.USD }, //когда пропишем програм
-                    new Currency { Code = "RUB", Rate = currencies.Rates.RUB },
-                    new Currency { Code = "JPY", Rate = currencies.Rates.JPY }
-                }
-            });    //берем ситуацию, что апи перестал возвращать данные
-        }
+        //public async Task PublishRates(IBusControl bus) 
+        //{
+        //    await bus.Publish<Currencies>(new
+        //    {
+        //        Rates = new List<Currency>
+        //        {
+        //            new Currency { Code = "EUR", Rate = 1 },
+        //            new Currency { Code = "USD", Rate = currencies.Rates.USD }, //когда пропишем програм
+        //            new Currency { Code = "RUB", Rate = currencies.Rates.RUB },
+        //            new Currency { Code = "JPY", Rate = currencies.Rates.JPY }
+        //        }
+        //    });    //берем ситуацию, что апи перестал возвращать данные
+        //}
     }
 }
