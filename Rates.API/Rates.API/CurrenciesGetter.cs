@@ -3,11 +3,23 @@
 namespace Rates.API
 {
     public class CurrenciesGetter
-    {        
+    {
+        private string _exchangeUrl;
+        private string _exchangeHost;
+
+        public CurrenciesGetter(string exchangeUrl, string exchangeHost)
+        {
+            _exchangeUrl = exchangeUrl;
+            _exchangeHost = exchangeHost;
+        }
+        public CurrenciesGetter()
+        {
+
+        }
         public ExchangeRateModel GetModel()
         {
-            CurrencyRates currencyRates = CurrencyRates.getInstance();            
-            ExchangeRateModel currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currencyRates.GetRates());            
+            var currenRates = CurrencyRates.getInstance();
+            ExchangeRateModel currencies = JsonConvert.DeserializeObject<ExchangeRateModel>(currenRates.GetRates(_exchangeUrl,_exchangeHost));
             return currencies;
         }
     }
