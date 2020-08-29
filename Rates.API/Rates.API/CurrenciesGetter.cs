@@ -12,10 +12,7 @@ namespace Rates.API
             _exchangeUrl = exchangeUrl;
             _exchangeHost = exchangeHost;
         }
-        public CurrenciesGetter()
-        {
-
-        }
+        
         public ExchangeRateModel GetModel()
         {
             var currenRates = CurrencyRates.getInstance();

@@ -4,12 +4,17 @@ namespace Rates.API
 {
     public class CurrenciesLogger
     {
-        public void LogCurrencies(ExchangeRateModel currencies)
+        private readonly string _filepath;
+        public CurrenciesLogger(string filepath)
         {
-            string _filepath = @"./currency.txt"; // уже в конфигурации (когда json заработает убрать отсюда)
+            _filepath = filepath;
+        }
+        public void LogCurrencies(ExchangeRateModel currencies)
+        {            
             string currenciesData = "DateOfChanges: " + 
                                     currencies.Time.ToString("dd.MM.yyyy HH:mm:ss") + 
-                                    "; USD = " + currencies.Rates.USD +         
+                                    "; USD = " + currencies.Rates.USD +
+                                    "; RUB = " + currencies.Rates.RUB +
                                     "; JPY = " + currencies.Rates.JPY;
             File.AppendAllText(_filepath, currenciesData + "\n");
         }
