@@ -4,59 +4,51 @@ using System.Timers;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Rates.API.Models;
 using Timer = System.Timers.Timer;
 
 namespace Rates.API
 {
     public class Program
-
     {
         private static Timer aTimer;
         private static IConfiguration Configuration { get; set; }
-        static int seconds = 0;
+        private static Playboy playboy;
+        private static CurrenciesGetter currenciesGetter;
+        private static CurrenciesLogger currenciesLogger;
+        private static IBusControl bus;
 
         static async Task Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
-           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);                     
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);                     
             Configuration = builder.Build();
-            var exchangeUrl = Configuration["ExhangeUrl"];
-            var exchangeHost = Configuration["ExchangeHost"];
+            Configurations configurations = new Configurations(Configuration);
+           
+            playboy = new Playboy(configurations.rabbitMQHost, configurations.userName, configurations.password);
+            currenciesGetter = new CurrenciesGetter(configurations.exchangeUrl, configurations.exchangeHost);
+            currenciesLogger = new CurrenciesLogger(configurations.filepath);
 
-            CurrenciesGetter curGetter = new CurrenciesGetter(exchangeUrl, exchangeHost);
-            var exchangeRateModel = curGetter.GetModel();
+            bus = playboy.GetConnectionBus();
+            bus.Start();      
+            
+            var currencies = currenciesGetter.GetModel();
+            await playboy.PublishRates(bus, currencies);
+            currenciesLogger.LogCurrencies(currencies);
 
             aTimer = new Timer();
-            aTimer.Interval = 30000;
+            aTimer.Interval = 3600000;
+            aTimer.Elapsed += OnTimedEvent;           
             aTimer.Start();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-
-
-
-            Console.WriteLine("Press the Enter key to exit the program.");
-            Console.ReadLine();            
-
-            //Console.OutputEncoding = Encoding.UTF8;
-            //Playboy playboy = new Playboy();
-            //var bus = playboy.GetConnectionBus();
-            //bus.Start();
-            //var startTimeSpan = TimeSpan.Zero;
-            //var periodTimeSpan = TimeSpan.FromMinutes(60);
-            //var timer = new Timer(async (e) =>    //добавить обработчики getModel, publishRates и logRates через событие elapsed
-            //{
-            //    await playboy.PublishRates(bus); // поработать с событиями!!!!!
-            //}, null, startTimeSpan, periodTimeSpan);
-            //Console.ReadKey();
-            //bus.Stop();
+            Console.WriteLine("Press the Enter key to exit the program at any time... ");
+            Console.ReadLine();
         }
 
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            seconds++;
+            var currencies = currenciesGetter.GetModel();
+            playboy.PublishRates(bus, currencies);
+            currenciesLogger.LogCurrencies(currencies);
         }
-        
     }
 }
     
