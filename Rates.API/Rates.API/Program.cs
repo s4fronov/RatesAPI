@@ -36,7 +36,7 @@ namespace Rates.API
             currenciesLogger.LogCurrencies(currencies);
 
             aTimer = new Timer();
-            aTimer.Interval = 10000;
+            aTimer.Interval = 3600000;
             aTimer.Elapsed += OnTimedEvent;           
             aTimer.Start();
             Console.WriteLine("Press the Enter key to exit the program at any time... ");
